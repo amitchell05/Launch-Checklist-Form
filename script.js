@@ -18,9 +18,12 @@ window.addEventListener('load', function() {
          <img src="${json[index].image}">
          `;
 
+         init();
       });
    });
+});
 
+function init() {
    const form = document.querySelector('form');
 
    const pilotName = document.getElementById('pilotName');
@@ -45,21 +48,23 @@ window.addEventListener('load', function() {
          alert('Fuel level and cargo mass inputs must be numbers!');
          event.preventDefault();
       } else if (!/^[a-zA-Z]+$/.test(pilotName.value) || !/^[a-zA-Z]+$/.test(copilotName.value)) {
-         // Revisit for find a more "normal" way
          alert('Pilot and copilot names must be a valid string!');
          event.preventDefault();
       }
 
+      pilotStatus.innerHTML = `Pilot ${pilotName.value} is ready for launch`;
+      copilotStatus.innerHTML = `Co-pilot ${copilotName.value} is ready for launch`;
+
       if (fuelLevel.value < 10000) {
          faultyItems.style.visibility = 'visible';
          fuelStatus.innerHTML = 'Fuel level too low for launch';
-         launchStatus.innerHTML = 'Shuttle not ready for launch';
+         launchStatus.innerHTML = 'Shuttle Not Ready For Launch';
          launchStatus.style.color =  'red';
          event.preventDefault();
       } else if (cargoMass.value > 10000) {
          faultyItems.style.visibility = 'visible';
          cargoStatus.innerHTML = 'Cargo mass too high for launch';
-         launchStatus.innerHTML = 'Shuttle not ready for launch';
+         launchStatus.innerHTML = 'Shuttle Not Ready For Launch';
          launchStatus.style.color =  'red';
          event.preventDefault();
       } else {
@@ -68,17 +73,4 @@ window.addEventListener('load', function() {
       }
 
    });
-   
-});
-
-/* This block of code shows how to format the HTML once you fetch some planetary JSON!
-<h2>Mission Destination</h2>
-<ol>
-   <li>Name: ${}</li>
-   <li>Diameter: ${}</li>
-   <li>Star: ${}</li>
-   <li>Distance from Earth: ${}</li>
-   <li>Number of Moons: ${}</li>
-</ol>
-<img src="${}">
-*/
+}
